@@ -6,13 +6,11 @@ library(tidyr)
 # Set options to display numbers without scientific notation
 options(scipen = 999)
 
-
-
 rm(list = ls())
 
-setwd("/Users/madiraa/Desktop/columbia_poan/spring_2024/survey_polling")
+setwd("/Users/madiraa/Desktop/columbia_poan/spring_2024/survey_polling/survey_polling_experiment")
 
-df <- read_csv("results.csv")
+df <- read_csv("results_march11.csv")
 
 print(colnames(df))
 ##################################
