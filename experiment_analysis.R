@@ -8,7 +8,7 @@ options(scipen = 999)
 
 rm(list = ls())
 
-setwd("/Users/madiraa/Desktop/columbia_poan/spring_2024/survey_polling/survey_polling_experiment")
+setwd("/Users/madison/Desktop/survey_polling_experiment")
 
 df <- read_csv("results_march11.csv")
 
@@ -114,38 +114,34 @@ df = mutate(df,
 #################################
 
 # adversary message affect 
-model <- glm(too_little ~ adversary_message + control, data = df, family = "binomial")
+model <- lm(too_little ~ adversary_message , data = df)
 summary(model)
 
 # ukraine need message affect 
-model <- glm(too_little ~ ukr_need + control, data = df, family = "binomial")
+model <- lm(too_little ~ ukr_need, data = df)
 summary(model)
 
 # aid factoid message affect
-model <- glm(too_little ~ aid_fact + control, data = df, family = "binomial")
+model <- lm(too_little ~ aid_fact, data = df)
 summary(model)
 
-### Potentially more robust model? Idk I am getting a little lost in this sauce
-
-# adversary message affect 
-model <- glm(too_little ~ adversary_message + ukr_need + aid_fact + control + strong_dem + not_strong_dem + ind_close_dem + ind + ind_close_rep + not_strong_rep + strong_rep, data = df, family = "binomial")
-summary(model)
+# Better Model adv message TODO
+#model <- lm(too_little ~ adversary_message + is_man + )
 
 # getting $ spent right and believing we are doing too X; results ppl who got it right on average think too much or abotu right 
 df <- mutate(df,
              aid_knowledge = ifelse(Q3 == "75-100 billion USD", 1, 0))
 
-model <- lm(too_little ~ aid_knowledge + control, data = df, family = "binomial")
+model <- lm(too_little ~ aid_knowledge, data = df)
 summary(model)
 
-model <- lm(about_right ~ aid_knowledge, data = df, family = "binomial")
+model <- lm(about_right ~ aid_knowledge, data = df)
 summary(model)
 
-model <- lm(too_much ~ aid_knowledge, data = df, family = "binomial")
+model <- lm(too_much ~ aid_knowledge, data = df)
 summary(model)
 
 # advantage assessment regressions
-
 model <- lm(too_little ~ rus_advantage + ukr_advantage + neither_advantage, data = df)
 summary(model)
 
@@ -171,7 +167,7 @@ desired_order <- c("less than 100 million USD",
                    "5-10 billion USD", 
                    "10-25 billion USD", 
                    "25-50 billion USD", 
-                   "50-75 billion USD", 
+                   "50 - 75 billion USD", 
                    "75-100 billion USD")
 
 # Convert Q3 to a factor with the desired order
@@ -295,9 +291,16 @@ for (q in questions) {
 # Convert "additional_arms" to numeric
 df$additional_arms <- as.numeric(df$additional_arms)
 
-model <- glm(additional_arms ~ adversary_message + ukr_need + aid_fact + control + strong_dem + not_strong_dem + ind_close_dem + ind + ind_close_rep + not_strong_rep + strong_rep, data = df, family = "binomial")
+model <- glm(additional_arms ~ adversary_message, data = df)
 summary(model)
 
+model <- glm(additional_arms ~ ukr_need, data = df)
+summary(model)
+
+model <- glm(additional_arms ~ aid_fact, data = df)
+summary(model)
+
+#convert additional_econ to numeric 
 df$additional_econ <- as.numeric(df$additional_econ)
 model <- glm(additional_econ ~ adversary_message + ukr_need + aid_fact + control + strong_dem + not_strong_dem + ind_close_dem + ind + ind_close_rep + not_strong_rep + strong_rep, data = df, family = "binomial")
 summary(model)
