@@ -180,6 +180,13 @@ ggplot(df_filtered, aes(x = Q3)) +
        x = "Responses",
        y = "Frequency")
 
+# Distribution of responses to Q5 as a bar chart
+ggplot(df_filtered, aes(x = send_troops)) +
+  geom_bar() +
+  labs(title = "Do you support sending U.S. troops to Ukraine?",
+       x = "Response",
+       y = "Frequency")
+
 # Distribution of responses to Q2 as a bar chart
 # Define the desired order of levels
 desired_order <- c("a few months", "six months to a year", "over a year", "two to four years", "five years or more")
